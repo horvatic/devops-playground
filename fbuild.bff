@@ -1,0 +1,33 @@
+.BuildConfigs = {}
+
+#include "toolchains/linux.bff"
+
+#include "targets/hello.bff"
+
+.AllTargets = {}
+ForEach(.BuildConfig in .BuildConfigs)
+{
+    Using(.BuildConfig)
+    .CompilerOutputPath = "build/$os$/$flavour$/intermediate"
+
+    .MainObjName = 'Main-Obj-$OS$-$Flavour$'
+    ObjectList(.MainObjName)
+    {
+        .CompilerInputFiles = 'main.cpp'
+    }
+
+    .MainExeName = 'Main-Exe-$OS$-$Flavour$'
+    Executable(.MainExeName)
+    {
+        .LinkerOutput = 'main-$os$-$flavour$$ExeSuffix$'
+        .LinkerOptions = '-o %2 %1'
+
+        .HelloDLLName = 'Hello-DLL-$OS$-$Flavour$'
+        .Libraries = { .MainObjName, .HelloDLLName }
+    }
+    ^AllTargets + .MainExeName
+}
+
+Alias('all'){
+    .Targets = .AllTargets
+}

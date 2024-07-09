@@ -1,0 +1,48 @@
+#if __LINUX__
+
+Compiler('g++-linux')
+{
+    .Executable = '/usr/bin/g++'
+}
+
+// This config represents options that are common across flavours for the Linux
+.Config_Linux = [
+    .OS = 'Linux'
+    .os = 'linux'
+    .Compiler = 'g++-linux'
+    .CompilerOptions_OS = '-c -I include -o %2 %1'
+    .Linker = '/usr/bin/g++'
+    .LinkerType = 'g++'
+    .LinkerOptions = '-shared -fPIC -o %2 %1'
+    .LibPrefix = 'lib'
+    .LibSuffix = '.so'
+    .ExeSuffix = ''
+]
+
+// Flavour-specific config is defined here
+.Config_Linux_Debug = [
+    .Flavour = 'Debug'
+    .flavour = 'debug'
+    .CompilerOptions_Flavour = ' -g'
+]
+.Config_Linux_Release = [
+    .Flavour = 'Release'
+    .flavour = 'release'
+    .CompilerOptions_Flavour = ' -O3'
+]
+
+// Merge the common OS config with the Flavour-specific config
+.BuildConfig_Linux_Debug = [
+    Using(.Config_Linux)
+    Using(.Config_Linux_Debug)
+    .CompilerOptions = .CompilerOptions_OS + .CompilerOptions_Flavour
+]
+.BuildConfig_Linux_Release = [
+    Using(.Config_Linux)
+    Using(.Config_Linux_Release)
+    .CompilerOptions = .CompilerOptions_OS + .CompilerOptions_Flavour
+]
+
+.BuildConfigs + .BuildConfig_Linux_Debug // Add this config to our array of configs
+.BuildConfigs + .BuildConfig_Linux_Release
+#endif
