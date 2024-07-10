@@ -14,7 +14,7 @@ pipeline {
                     sh '''
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t rsa,dsa cprod.libvirt >> ~/.ssh/known_hosts
-                    ssh -v produser@cprod.libvirt
+                    ssh -o StrictHostKeyChecking=no produser@cprod.libvirt
                     scp HelloWorld.exe produser@cprod.libvirt:/home/produser/HelloWorld.exe
                     '''
                 }
