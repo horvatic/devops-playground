@@ -1,0 +1,21 @@
+.Compiler           = '/usr/bin/g++'
+.CompilerOptions    = '-c -g "%1" -o "%2"'
+.Linker             = '/usr/bin/g++'
+.LinkerOptions      = '-g -o "%2" "%1"'
+// HelloWorld
+//------------------------------------------------------------------------------
+ObjectList( 'HelloWorld-Lib' )
+{
+    .CompilerInputPath  = '.'
+    .CompilerOutputPath = 'Out'
+}
+
+Executable( 'HelloWorld' )
+{
+    .Libraries          = { "HelloWorld-Lib" }
+    .LinkerOutput       = 'Out/HelloWorld.exe'
+}
+
+// All
+//------------------------------------------------------------------------------
+Alias( 'all' ) { .Targets = { 'HelloWorld' } }
