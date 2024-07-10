@@ -10,10 +10,13 @@ pipeline {
         stage ('deploy') {
             steps{
                 sshagent(credentials : ['cprod-login']) {
-                    unstash 'app' 
-                    sh 'ssh -o StrictHostKeyChecking=no produser@cprod.libvirt uptime'
-                    sh 'ssh -v produser@cprod.libvirt'
-                    sh 'scp HelloWorld.exe produser@cprod.libvirt:/home/produser/HelloWorld.exe'
+                    unstash 'app'
+                    sh '''
+                    [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                    ssh-keyscan -t rsa,dsa cprod.libvirt >> ~/.ssh/known_hosts
+                    ssh -v produser@cprod.libvirt
+                    scp HelloWorld.exe produser@cprod.libvirt:/home/produser/HelloWorld.exe
+                    '''
                 }
             }
         }
