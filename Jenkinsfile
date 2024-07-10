@@ -1,9 +1,10 @@
 pipeline {
-    agent { docker { image 'golang:1.22.5-alpine3.20' } }
+    agent { docker { image 'horvatic/fbuild' } }
     stages {
         stage('build') {
             steps {
-                sh 'go version'
+                sh 'fbuild'
+                sh './Out/HelloWorld.exe'
             }
         }
     }
