@@ -4,7 +4,17 @@ pipeline {
         stage('build') {
             steps {
                 sh 'fbuild'
-                sh './Out/HelloWorld.exe'
+                stash includes: '**/Out/HelloWorld.exe', name: 'app' 
+            }
+        }
+        stage ('deploy') {
+            steps{
+                sshagent(credentials : ['cprod-login']) {
+                    unstash 'app' 
+                    sh 'ssh -o StrictHostKeyChecking=no produser@cprod.libvirt uptime'
+                    sh 'ssh -v produser@cprod.libvirt'
+                    sh 'scp HelloWorld.exe produser@cprod.libvirt:/home/produser/HelloWorld.exe'
+                }
             }
         }
     }
