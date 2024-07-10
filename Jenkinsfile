@@ -12,6 +12,7 @@ pipeline {
                 sshagent(credentials : ['cprod-login']) {
                     unstash 'app'
                     sh '''
+                    ls
                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                     ssh-keyscan -t ed25519 cprod.libvirt >> ~/.ssh/known_hosts
                     ssh produser@cprod.libvirt
