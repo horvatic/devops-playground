@@ -1,21 +1,33 @@
-.Compiler           = '/usr/bin/g++'
-.CompilerOptions    = '-c -g "%1" -o "%2"'
-.Linker             = '/usr/bin/g++'
-.LinkerOptions      = '-g -o "%2" "%1"'
-// HelloWorld
-//------------------------------------------------------------------------------
-ObjectList( 'HelloWorld-Lib' )
+.BuildConfigs = {}
+
+#include "toolchains/linux.bff"
+
+#include "targets/hello.bff"
+
+.AllTargets = {}
+ForEach(.BuildConfig in .BuildConfigs)
 {
-    .CompilerInputPath  = '.'
-    .CompilerOutputPath = 'Out'
+    Using(.BuildConfig)
+    .CompilerOutputPath = "build/$os$/$flavour$/intermediate"
+
+    .MainObjName = 'Main-Obj-$OS$-$Flavour$'
+    ObjectList(.MainObjName)
+    {
+        .CompilerInputFiles = 'main.cpp'
+    }
+
+    .MainExeName = 'Main-Exe-$OS$-$Flavour$'
+    Executable(.MainExeName)
+    {
+        .LinkerOutput = 'main-$os$-$flavour$$ExeSuffix$'
+        .LinkerOptions = '-o %2 %1'
+
+        .HelloDLLName = 'Hello-DLL-$OS$-$Flavour$'
+        .Libraries = { .MainObjName, .HelloDLLName }
+    }
+    ^AllTargets + .MainExeName
 }
 
-Executable( 'HelloWorld' )
-{
-    .Libraries          = { "HelloWorld-Lib" }
-    .LinkerOutput       = 'Out/HelloWorld.exe'
+Alias('all'){
+    .Targets = .AllTargets
 }
-
-// All
-//------------------------------------------------------------------------------
-Alias( 'all' ) { .Targets = { 'HelloWorld' } }

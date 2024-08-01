@@ -1,0 +1,22 @@
+// Hello DLL
+.LibArgs = [
+    .FName = 'Hello'
+    .LName = 'hello'
+    .CompilerInputFiles = "hello.cpp"
+]
+
+ForEach(.BuildConfig in .BuildConfigs)
+{
+    Using(.LibArgs)
+    Using(.BuildConfig)
+    .CompilerOutputPath = "build/$os$/$flavour$/intermediate"
+    .ObjName = '$FName$-Obj-$OS$-$Flavour$'
+    ObjectList(.ObjName){}
+
+    .DLLName = '$FName$-DLL-$OS$-$Flavour$'
+    DLL(.DLLName)
+    {
+        .LinkerOutput = 'build/$os$/$flavour$/$LibPrefix$$LName$$LibSuffix$'
+        .Libraries = .ObjName
+    }
+}
