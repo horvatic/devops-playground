@@ -3,7 +3,6 @@
 Compiler('g++-linux')
 {
     .Executable = '/usr/bin/g++'
-    .CompilerFamily = 'g++'
 }
 
 // This config represents options that are common across flavours for the Linux
@@ -11,10 +10,10 @@ Compiler('g++-linux')
     .OS = 'Linux'
     .os = 'linux'
     .Compiler = 'g++-linux'
-    .CompilerOptions_OS = '-c -g "%1" -o "%2"'
+    .CompilerOptions_OS = '-c -I include -o %2 %1'
     .Linker = '/usr/bin/g++'
     .LinkerType = 'g++'
-    .LinkerOptions = '-g -o "%2" "%1"'
+    .LinkerOptions = '-shared -fPIC -o %2 %1'
     .LibPrefix = 'lib'
     .LibSuffix = '.so'
     .ExeSuffix = ''
