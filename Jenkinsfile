@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'fbuild'
                 stash includes: '**/main-linux-release', name: 'app'
-                stash includes: '**/build/**', name: 'dll' 
+                stash includes: '**/build/linux/release/libhello.so', name: 'dll' 
             }
         }
         stage ('deploy') {
@@ -18,7 +18,7 @@ pipeline {
                     ssh-keyscan -t ed25519 cprod.libvirt >> ~/.ssh/known_hosts
                     ssh produser@cprod.libvirt
                     scp main-linux-release produser@cprod.libvirt:/home/produser/
-                    scp -r build produser@cprod.libvirt:/home/produser/build
+                    scp libhello.so produser@cprod.libvirt:/home/produser/bin
                     '''
                 }
             }
