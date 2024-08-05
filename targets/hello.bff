@@ -17,6 +17,7 @@ ForEach(.BuildConfig in .BuildConfigs)
     DLL(.DLLName)
     {
         .LinkerOutput = 'build/$os$/$flavour$/$LibPrefix$$LName$$LibSuffix$'
+        .LinkerOptions = '-shared -fPIC -o %2 %1 -Wl,-soname=libhello.so'
         .Libraries = .ObjName
     }
 }

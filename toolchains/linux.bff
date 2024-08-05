@@ -13,7 +13,6 @@ Compiler('g++-linux')
     .CompilerOptions_OS = '-c -I include -o %2 %1'
     .Linker = '/usr/bin/g++'
     .LinkerType = 'g++'
-    .LinkerOptions = '-shared -fPIC -o %2 %1 -Wl,-soname=libhello.so'
     .LibPrefix = 'lib'
     .LibSuffix = '.so'
     .ExeSuffix = ''
