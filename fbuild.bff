@@ -20,7 +20,7 @@ ForEach(.BuildConfig in .BuildConfigs)
     Executable(.MainExeName)
     {
         .LinkerOutput = 'main-$os$-$flavour$$ExeSuffix$'
-        .LinkerOptions = '-o %2 %1'
+        .LinkerOptions = '-o %2 %1 -Wl,-rpath=^$ORIGIN/bin'
 
         .HelloDLLName = 'Hello-DLL-$OS$-$Flavour$'
         .Libraries = { .MainObjName, .HelloDLLName }
