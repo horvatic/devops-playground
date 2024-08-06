@@ -1,7 +1,7 @@
 .BuildConfigs = {}
 
 #include "toolchains/linux.bff"
-
+#include "targets/goodbye.bff"
 #include "targets/hello.bff"
 
 .AllTargets = {}
