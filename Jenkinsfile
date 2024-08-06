@@ -18,7 +18,7 @@ pipeline {
                     ssh-keyscan -t ed25519 cprod.libvirt >> ~/.ssh/known_hosts
                     ssh produser@cprod.libvirt "mkdir -p /home/produser/bin/"
                     scp main-linux-release produser@cprod.libvirt:/home/produser/
-                    scp build/linux/release/* produser@cprod.libvirt:/home/produser/bin/
+                    scp build/linux/release/*.so produser@cprod.libvirt:/home/produser/bin/
                     '''
                 }
             }
