@@ -23,7 +23,8 @@ ForEach(.BuildConfig in .BuildConfigs)
         .LinkerOptions = '-o %2 %1 -Wl,-rpath=^$ORIGIN/bin'
 
         .HelloDLLName = 'Hello-DLL-$OS$-$Flavour$'
-        .Libraries = { .MainObjName, .HelloDLLName }
+        .GoodbyeDLLName = 'Goodbye-DLL-$OS$-$Flavour$'
+        .Libraries = { .MainObjName, .HelloDLLName, .GoodbyeDLLName }
     }
     ^AllTargets + .MainExeName
 }
