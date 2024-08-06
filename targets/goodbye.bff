@@ -1,0 +1,7 @@
+// Goodbye DLL
+.LibArgs = [
+    .FName = 'Goodbye'
+    .LName = 'goodbye'
+    .CompilerInputFiles = "goodbye.cpp"
+]
+#include "../common/dll.bff"
