@@ -1,6 +1,14 @@
 pipeline {
     agent { docker { image 'horvatic/fbuild' } }
     stages {
+        stage('groovy test') {
+            steps {
+                script {
+                    def util = load("${env.WORKSPACE}/test.groovy")
+                    util.testHello()
+                }
+            }
+        }
         stage('build') {
             steps {
                 sh 'fbuild'
