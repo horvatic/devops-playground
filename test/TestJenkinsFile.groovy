@@ -6,7 +6,6 @@ class TestJenkinsFile extends BasePipelineTest {
     @Before
     void setUp() {
         super.setUp()
-        helper.registerAllowedMethod('deploy', []) { args -> println 'hello' }
         helper.registerAllowedMethod('sh', [Map]) { args -> println 'hello' }
         binding.setVariable('env', [WORKSPACE:"./"])
     }
