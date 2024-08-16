@@ -10,7 +10,7 @@ class TestHello extends BasePipelineTest {
     }
     @Test
     void shouldExecuteWithoutErrors() {
-        def result = loadScript('hello.groovy').getHello()
+        def result = loadScript('scripts/hello.groovy').getHello()
         assertTrue("Results was not Hello World, results where ${result}", "Hello World" == result)
     }
 }

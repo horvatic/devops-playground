@@ -4,7 +4,7 @@ node {
             checkout scm
         }
         stage('groovy test') {
-            def hello = load("${env.WORKSPACE}/hello.groovy")
+            def hello = load("${env.WORKSPACE}/scripts/hello.groovy")
             println hello.getHello()
         }
         stage('build') {
@@ -13,7 +13,7 @@ node {
             stash includes: '**/build/linux/release/*.so', name: 'dll' 
         }
         stage ('deploy') {
-            def util = load("${env.WORKSPACE}/deploy.groovy")
+            def util = load("${env.WORKSPACE}/scripts/deploy.groovy")
             util.deploy()
         }
     }
