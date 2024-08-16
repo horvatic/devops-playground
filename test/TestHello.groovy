@@ -12,7 +12,7 @@ class TestHelloJob extends BasePipelineTest {
     }
     @Test
     void shouldExecuteWithoutErrors() {
-        loadScript('Jenkinsfile').execute()
+        loadScript('Jenkinsfile')
         printCallStack()
         assertJobStatusSuccess()
     }
