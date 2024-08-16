@@ -5,7 +5,7 @@ node {
         }
         stage('groovy test') {
             def hello = load("${env.WORKSPACE}/hello.groovy")
-            hello.testHello()
+            println hello.getHello()
         }
         stage('build') {
             sh 'fbuild'

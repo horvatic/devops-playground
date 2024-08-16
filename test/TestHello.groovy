@@ -1,19 +1,16 @@
 import org.junit.*
+import static org.junit.Assert.*
 import com.lesfurets.jenkins.unit.BasePipelineTest
 
-class TestHelloJob extends BasePipelineTest {
+class TestHello extends BasePipelineTest {
     @Override
     @Before
     void setUp() {
         super.setUp()
-        helper.registerAllowedMethod('deploy', []) { args -> println 'hello' }
-        helper.registerAllowedMethod('sh', [Map]) { args -> println 'hello' }
-        binding.setVariable('env', [WORKSPACE:"./"])
     }
     @Test
     void shouldExecuteWithoutErrors() {
-        loadScript('Jenkinsfile')
-        printCallStack()
-        assertJobStatusSuccess()
+        def result = loadScript('hello.groovy').getHello()
+        assertTrue("Results was not Hello World, results where ${result}", "Hello World" == result)
     }
 }

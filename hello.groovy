@@ -1,4 +1,4 @@
-def testHello() {
-    println('Hello World');
+def getHello() {
+    return 'Hello World'
 }
 return this
