@@ -1,5 +1,8 @@
 node {
     docker.image('horvatic/fbuild').inside {
+        stage('checkout') {
+            checkout scm
+        }
         stage('groovy test') {
             def hello = load("${env.WORKSPACE}/hello.groovy")
             hello.testHello()
@@ -12,7 +15,6 @@ node {
         stage ('deploy') {
             def util = load("${env.WORKSPACE}/deploy.groovy")
             util.deploy()
-            deploy()
         }
     }
 }
